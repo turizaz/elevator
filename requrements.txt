@@ -1,0 +1,3 @@
+Elevator should handle incoming requests in reliable and rational way, which mean that elevator should choose a way (up/down) to complete majority of requests, 
+and then it should goes in opposite way to complete the remained requests which are saved in queue.
+Also it should be covered by security validations such as people limit validation and smoke validation.

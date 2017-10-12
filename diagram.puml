@@ -1,0 +1,82 @@
+@startuml
+    class AbstractElevatorController {
+        +addRequest()
+        +handleRequest()
+    }
+    class CivilElevatorController extends AbstractElevatorController {
+        +addRequest()
+        +handleRequest()
+    }
+    class ChecksController {
+        -peopleLimit : Integer
+        +runChecks()
+        +countPeople()
+        +setPeopleLimit()
+        +checkSmoke()
+    }
+    class DoorsController implements DoorsInterface {
+        + open()
+        + close()
+    }
+    class EngineController implements EngineInterface{
+        #rotateEngine()
+        +moveToTheFloor()
+    }
+
+    class PersonModel implements RequestInterface {
+        -requests : Array
+        +addRequest()
+        +getRequests()
+
+    }
+    class RequestModel {
+        -floor : Integer
+        -direction : Mixed
+    }
+
+    interface EngineInterface {
+        +moveToTheFloor()
+    }
+
+    interface QueueServiceInterface {
+        +removeFromQueue()
+        +printFloorMessage()
+        +getRequestQueue()
+        +getNextFloor()
+        +getCurrentFloor()
+        +getDirection()
+    }
+
+    interface DoorsInterface {
+          + open()
+          + close()
+    }
+    interface RequestInterface {
+        +addRequest()
+    }
+
+    class QueueService implements QueueServiceInterface, RequestInterface{
+        -requestQueue : Array
+        -currentFloor : Integer
+        -direction : Mixed
+
+        +addRequest()
+        +handleQueue()
+        +getDirection()
+        +getCurrentFloor()
+        +printFloorMessage()
+        +getNextFloor()
+        +removeFromQueue()
+        +assignCurrentFloor()
+        +getRequestQueue()
+    }
+
+    PersonModel "1" <-- "many" RequestModel
+
+    CivilElevatorController "1" o-- "many" PersonModel
+
+    CivilElevatorController "1" <-- "1" QueueService
+    CivilElevatorController "1" <-- "1" ChecksController
+    CivilElevatorController "1" <-- "1" DoorsController
+    CivilElevatorController "1" <-- "1" EngineController
+@enduml;
